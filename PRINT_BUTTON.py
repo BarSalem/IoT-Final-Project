@@ -238,7 +238,7 @@ class MainWindow(QMainWindow):
 
         # set up main window
         self.setGeometry(30, 100, 300, 70)
-        self.setWindowTitle('Print DataBase BUTTON')
+        self.setWindowTitle('Print DataBase of DHT sensor BUTTON')
 
         # Init QDockWidget objects
         self.connectionDock = ConnectionDock(self.mc)

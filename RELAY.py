@@ -16,6 +16,8 @@ global clientname
 r = random.randrange(1, 10000000)
 clientname = "IOT_client-Id-" + str(r)
 relay_topic = "pr/home/button_123_BS/sts"
+NOT_WORKING_AC_PATH = "CONDITIONER_OFF.png"
+WORKING_AC_PATH = "CONDITIONER_ON.jpg"
 global ON
 ON = False
 
@@ -197,6 +199,22 @@ class ConnectionDock(QDockWidget):
 
         widget = QWidget(self)
         widget.setLayout(formLayot)
+
+        dock = QDockWidget("Image Dock", self)
+        dock_widget = QWidget()
+        dock.setWidget(dock_widget)
+
+        # Create a vertical layout for the dock widget
+
+        pixmap = QPixmap(NOT_WORKING_AC_PATH)
+
+        label = QLabel()
+        label.setPixmap(pixmap)
+        self.picture_label = label
+        formLayot.addRow("State", label)
+        self.formLayot = formLayot
+        self.widget_custom = widget
+
         self.setTitleBarWidget(widget)
         self.setWidget(widget)
         self.setWindowTitle("Connect")
@@ -220,10 +238,22 @@ class ConnectionDock(QDockWidget):
             self.ePushtbtn.setStyleSheet("background-color: gray")
             self.ePushtbtn.setText("The condition air is off")
             ON = False
+            pixmap = QPixmap(NOT_WORKING_AC_PATH)
+
+            # Set the new pixmap on the QLabel
+            self.picture_label.setPixmap(pixmap)
+            self.picture_label.setScaledContents(True)
+            self.picture_label.adjustSize()
         else:
             self.ePushtbtn.setStyleSheet("background-color: red")
             self.ePushtbtn.setText("The condition air is on")
             ON = True
+            pixmap = QPixmap(WORKING_AC_PATH)
+
+            # Set the new pixmap on the QLabel
+            self.picture_label.setPixmap(pixmap)
+            self.picture_label.setScaledContents(True)
+            self.picture_label.adjustSize()
 
 
 class MainWindow(QMainWindow):
@@ -239,7 +269,7 @@ class MainWindow(QMainWindow):
 
         # set up main window
         self.setGeometry(30, 300, 300, 150)
-        self.setWindowTitle('RELAY')
+        self.setWindowTitle('DHT Sensor Relay')
 
         # Init QDockWidget objects        
         self.connectionDock = ConnectionDock(self.mc)

@@ -16,6 +16,8 @@ global clientname
 r = random.randrange(1, 10000000)
 clientname = "IOT_client-Id-" + str(r)
 relay_topic = "pr/home/button_123_BS/sts_light"
+OPEN_BLINDS_PATH = "open blinds.jpg"
+CLOSE_BLINDS_PATH = "CLOSED BLINDS.png"
 global ON
 ON = False
 
@@ -197,6 +199,20 @@ class ConnectionDock(QDockWidget):
 
         widget = QWidget(self)
         widget.setLayout(formLayot)
+
+        dock = QDockWidget("Image Dock", self)
+        dock_widget = QWidget()
+        dock.setWidget(dock_widget)
+
+        # Create a vertical layout for the dock widget
+
+        pixmap = QPixmap(OPEN_BLINDS_PATH)
+
+        label = QLabel()
+        label.setPixmap(pixmap)
+
+        formLayot.addRow("State", label)
+        self.picture_label = label
         self.setTitleBarWidget(widget)
         self.setWidget(widget)
         self.setWindowTitle("Connect")
@@ -218,12 +234,24 @@ class ConnectionDock(QDockWidget):
         global ON
         if ON:
             self.ePushtbtn.setStyleSheet("background-color: gray")
-            self.ePushtbtn.setText("The blinds air are off")
+            self.ePushtbtn.setText("The blinds air are OPEN!")
             ON = False
+            pixmap = QPixmap(OPEN_BLINDS_PATH)
+
+            # Set the new pixmap on the QLabel
+            self.picture_label.setPixmap(pixmap)
+            self.picture_label.setScaledContents(True)
+            self.picture_label.adjustSize()
         else:
             self.ePushtbtn.setStyleSheet("background-color: red")
-            self.ePushtbtn.setText("The blinds are on")
+            self.ePushtbtn.setText("The blinds are CLOSED!")
             ON = True
+            pixmap = QPixmap(CLOSE_BLINDS_PATH)
+
+            # Set the new pixmap on the QLabel
+            self.picture_label.setPixmap(pixmap)
+            self.picture_label.setScaledContents(True)
+            self.picture_label.adjustSize()
 
 
 class MainWindow(QMainWindow):
@@ -240,6 +268,7 @@ class MainWindow(QMainWindow):
         # set up main window
         self.setGeometry(30, 300, 300, 150)
         self.setWindowTitle('Light RELAY')
+
 
         # Init QDockWidget objects
         self.connectionDock = ConnectionDock(self.mc)

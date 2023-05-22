@@ -195,6 +195,9 @@ class ConnectionDock(QDockWidget):
         self.ePublisherTopic = QLineEdit()
         self.ePublisherTopic.setText(button_topic)
 
+        self.eSub__Topic = QLineEdit()
+        self.eSub__Topic.setText("pr/home/button_123_BS/sub_light")
+
         formLayot = QFormLayout()
         # formLayot.addRow("Host",self.eHostInput )
         # formLayot.addRow("Port",self.ePort )
@@ -206,6 +209,7 @@ class ConnectionDock(QDockWidget):
         # formLayot.addRow("Clean Session",self.eCleanSession )
         formLayot.addRow("Turn On/Off", self.eConnectbtn)
         formLayot.addRow("Pub topic", self.ePublisherTopic)
+        formLayot.addRow("Sub topic", self.eSub__Topic)
         formLayot.addRow("Button", self.ePushtbtn)
 
         widget = QWidget(self)
